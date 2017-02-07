@@ -137,22 +137,18 @@ int CountryFreq_Count(char *Name, FILE *fp) {
   char *file_contents, *ptr = NULL;
   long input_file_size;
 
-  printf("READING IN FILE TO STRING\n");
   fseek(fp, 0, SEEK_END);
   input_file_size = ftell(fp);
   rewind(fp);
   file_contents = malloc(input_file_size * (sizeof(char)));
   fread(file_contents, sizeof(char), input_file_size, fp);
-  printf("FILE READ INTO STRING\n");
 
-  printf("SEARCHING STRING FOR SUBSTRING\n");
   ptr = file_contents;
   while((ptr = strstr(ptr, Name)) != NULL) {
     cnt++;
     ptr+=strlen(Name);
   }
   cnt = cnt - Exceptions(Name, file_contents);
-  printf("FOUND SUBSTRING %d TIMES\n", cnt);
 
   free(file_contents);
   return cnt;
